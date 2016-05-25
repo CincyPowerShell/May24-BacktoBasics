@@ -1,8 +1,9 @@
 ﻿return
-
+#region setup
 $psise.options.ErrorForegroundColor = 'Green'
 $psISE.Options.Zoom = 175
 Set-Location -Path C:\demo
+#endregion setup
 
 #region Basic Concepts before Discovery
     #Console and ISE
@@ -15,32 +16,36 @@ Set-Location -Path C:\demo
 
     #Tab completion / Intelisense
 
-    Get-Service -Name
+    Get-Service -Name LanmanWorkstation -
 
-    dir c:\
+    dir c:
 
     #What Version?
 
     $PSVersionTable
 
-    Start-Process powershell.exe -ArgumentList '-v 2 -noprofile'
+    Start-Process powershell.exe -ArgumentList '-version 4'
 
 #endregion
 
 #region Command Discovery
     #Verb-Noun - Approved Verbs?
+    # You will see warnings when using unapproved verbs 
+    # Nouns should not be plural
 
-        Get-Verb 
+        Get-Verb | Out-GridView
 
-        get-Command -Verb Get
+        get-Command -Verb get
 
-        get-command get-eventlog
+        Get-Command Get-EventLog
+
+        get-command export
 
 #endregion
 
 #region Help System
 
-    Get-Help Get-EventLog
+    Get-Help -Name Get-EventLog
     Get-help Get-EventLog -Full
     Help Get-EventLog -Full 
     #Help is actually a function Get-Help @PSBoundParameters | more
@@ -146,6 +151,7 @@ Set-Location -Path C:\demo
     get-eventlog -LogName System -Newest 10 | Export-Csv .\myevents.csv -NoTypeInformation 
     notepad .\myevents.csv
 
+
     get-eventlog -LogName System -Newest 10 | Select-Object EventID,TimeGenerated,Source,Message | Export-Csv .\myevents.csv -NoTypeInformation -Force
 
     get-eventlog -LogName System -Newest 10 | Where-Object {$_.EventID -eq '7040'} | Select-Object EventID,TimeGenerated,Source,Message | Export-Csv .\myevents.csv -NoTypeInformation -Force
@@ -182,7 +188,7 @@ Set-Location -Path C:\demo
 
         # Get-Service | Stop-Service
 
-        # Get-childitem *.* | remove-item
+        # Get-childitem *.* | remove-item 
 
         # get-ADUser | remove-ADUser
 
@@ -193,3 +199,5 @@ Set-Location -Path C:\demo
 
 
 $psISE.Options.Zoom = 100
+
+
